@@ -5,13 +5,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
 fun HomeScreenRoute() {
@@ -23,28 +27,45 @@ fun HomeScreenRoute() {
 @Composable
 private fun HomeScreenContent(
     modifier: Modifier = Modifier,
+    viewModel: HomeViewModel = hiltViewModel()
 ) {
-    Column(modifier = modifier.fillMaxSize().systemBarsPadding()) {
+    val uiState = viewModel.state.collectAsState()
+
+    val state = uiState.value
+
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .systemBarsPadding()
+            .padding(horizontal = 16.dp)
+    ) {
         Row(
-            modifier = modifier.fillMaxWidth(),
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp)
+            ,
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
             Button(
                 modifier = Modifier,
-                onClick = {}
+                onClick = { viewModel.onFetchButtonClick(state.isIdle()) }
             ) {
-                Text("Fetch sensor data")
+                if (state.isIdle()) {
+                    Text("Fetch sensor data")
+                } else {
+                    Text("Stop fetching sensor data")
+                }
             }
         }
-        Row(modifier = modifier.fillMaxWidth()) {
+        Row(modifier = modifier.fillMaxWidth().padding(top = 32.dp)) {
             Column(modifier = modifier.weight(1f)) {
                 Text("Accelerometer data:")
-                Text("-")
+                Text(text = if (state.isIdle()) "-" else "")
             }
             Column(modifier = modifier.weight(1f)) {
                 Text("Gyroscope data:")
-                Text("-")
+                Text(text = if (state.isIdle()) "-" else "")
             }
         }
     }
