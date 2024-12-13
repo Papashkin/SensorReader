@@ -1,4 +1,4 @@
-package com.example.sensorreader.data
+package com.example.sensorreader.data.local.sensordataprovider
 
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager

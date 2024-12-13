@@ -2,8 +2,8 @@ package com.example.sensorreader.di
 
 import android.content.Context
 import android.hardware.SensorManager
-import com.example.sensorreader.data.SensorDataProvider
-import com.example.sensorreader.data.SensorDataProviderImpl
+import com.example.sensorreader.data.local.sensordataprovider.SensorDataProvider
+import com.example.sensorreader.data.local.sensordataprovider.SensorDataProviderImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

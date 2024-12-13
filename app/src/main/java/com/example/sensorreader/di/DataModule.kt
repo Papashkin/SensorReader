@@ -1,19 +1,26 @@
 package com.example.sensorreader.di
 
-import com.example.sensorreader.data.repository.SensorRepository
-import com.example.sensorreader.data.repository.SensorRepositoryImpl
-import dagger.Binds
+import android.content.Context
+import androidx.room.Room
+import com.example.sensorreader.data.local.sensordatabase.SensorsDatabase
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-abstract class DataModule {
+object DataModule {
 
-    @Binds
     @Singleton
-    abstract fun bindsSensorRepository(sensorRepositoryImpl: SensorRepositoryImpl): SensorRepository
+    @Provides
+    fun provideSensorsDatabase(@ApplicationContext appContext: Context): SensorsDatabase =
+        Room.databaseBuilder(appContext, SensorsDatabase::class.java, "SensorData")
+            .build()
 
+    @Singleton
+    @Provides
+    fun provideSensorDataDao(database: SensorsDatabase) = database.sensorDataDao()
 }
