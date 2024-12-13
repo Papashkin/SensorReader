@@ -1,10 +1,13 @@
 package com.example.sensorreader.data.model
 
 import android.hardware.SensorEvent
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.util.UUID
 
+@Entity
 data class SensorDataModel(
-    val id: String,
+    @PrimaryKey val id: String,
     val timestamp: Long,
     val type: String,
     val x: Float,

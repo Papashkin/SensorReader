@@ -8,6 +8,7 @@ import com.example.sensorreader.data.model.SensorDataModel
 import com.example.sensorreader.data.model.toModel
 import com.example.sensorreader.domain.ConnectToAccelerometerSensorUseCase
 import com.example.sensorreader.domain.ConnectToGyroscopeSensorUseCase
+import com.example.sensorreader.domain.SetSensorDataToDatabaseUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -23,10 +24,11 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val connectToAccelerometerSensorUseCase: ConnectToAccelerometerSensorUseCase,
     private val connectToGyroscopeSensorUseCase: ConnectToGyroscopeSensorUseCase,
+    private val setSensorDataToDatabaseUseCase: SetSensorDataToDatabaseUseCase,
 ) : ViewModel() {
 
     companion object {
-        private const val SENSOR_DATA_DELAY = 150L
+        private const val SENSOR_DATA_DELAY = 120L
     }
 
     private val _state = MutableStateFlow<HomeUiState>(HomeUiState.Idle)
@@ -38,16 +40,12 @@ class HomeViewModel @Inject constructor(
     private var accelerometerFlow: Flow<SensorEvent>? = null
     private var gyroscopeFlow: Flow<SensorEvent>? = null
 
-    fun onFetchButtonClick(isIdleState: Boolean) = viewModelScope.launch {
-        if (isIdleState) {
-            connectToSensorsJob()
-        } else {
-            disconnectSensors()
-        }
+    fun onFetchButtonClick() = viewModelScope.launch {
+        sensorDataJob = connectToSensors()
     }
 
-    private fun connectToSensorsJob() {
-        sensorDataJob = connectToSensors()
+    fun onStopReceivingDataClick() = viewModelScope.launch {
+        disconnectSensors()
     }
 
     private fun connectToSensors() = viewModelScope.launch {

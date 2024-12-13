@@ -8,6 +8,4 @@ sealed class HomeUiState {
         val accelerometerData: SensorDataModel,
         val gyroscopeData: SensorDataModel,
     ) : HomeUiState()
-
-    fun isIdle(): Boolean = this is Idle
 }
