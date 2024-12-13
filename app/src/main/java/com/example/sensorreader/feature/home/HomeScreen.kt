@@ -10,12 +10,16 @@ import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 
 @Composable
 fun HomeScreenRoute() {
@@ -30,7 +34,6 @@ private fun HomeScreenContent(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val uiState = viewModel.state.collectAsState()
-
     val state = uiState.value
 
     Column(
@@ -42,8 +45,7 @@ private fun HomeScreenContent(
         Row(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(vertical = 16.dp)
-            ,
+                .padding(vertical = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
@@ -58,14 +60,30 @@ private fun HomeScreenContent(
                 }
             }
         }
-        Row(modifier = modifier.fillMaxWidth().padding(top = 32.dp)) {
+        Row(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(top = 32.dp)
+        ) {
             Column(modifier = modifier.weight(1f)) {
                 Text("Accelerometer data:")
-                Text(text = if (state.isIdle()) "-" else "")
+                Text(
+                    text = if (state.isIdle()) {
+                        "-"
+                    } else {
+                        (state as HomeUiState.Content).accelerometerData.x.toString()
+                    }
+                )
             }
             Column(modifier = modifier.weight(1f)) {
                 Text("Gyroscope data:")
-                Text(text = if (state.isIdle()) "-" else "")
+                Text(
+                    text = if (state.isIdle()) {
+                        "-"
+                    } else {
+                        (state as HomeUiState.Content).gyroscopeData.x.toString()
+                    }
+                )
             }
         }
     }
