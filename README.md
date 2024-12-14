@@ -2,9 +2,9 @@
 Application that reads data from 2 sensors: accelerometer and gyroscope
 # Architecture
 Application's architecture is based on MVVM (Model - View - ViewModel), which has 3 different layers: data, domain and resentation.
-First layer (data) is used to communicate with sensors and with database;
-Seconds layer (domain) is used for UseCases, that keeps business logic and provides data from Data layer to Presentation layer;
-Third layer (presentation) handles UI-specific part, which are UI elemens (such views) and viewModels (keep UI logic).
+- First layer (data) is used to communicate with sensors and with database;
+- Seconds layer (domain) is used for UseCases, that keeps business logic and provides data from Data layer to Presentation layer;
+- Third layer (presentation) handles UI-specific part, which are UI elemens (such views) and viewModels (keep UI logic).
 # Technologies
 * Jetpack Compose - for UI;
 * Coroutines - for parallel executions;
