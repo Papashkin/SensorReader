@@ -3,7 +3,6 @@ package com.example.sensorreader.domain
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
-import android.util.Log
 import com.example.sensorreader.data.repository.SensorRepository
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
