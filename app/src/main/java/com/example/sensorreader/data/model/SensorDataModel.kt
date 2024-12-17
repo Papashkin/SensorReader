@@ -16,7 +16,6 @@ data class SensorDataModel(
 )
 
 fun SensorEvent.toModel(type: String): SensorDataModel {
-    val timestamp = System.currentTimeMillis()
     val id = UUID.randomUUID().toString()
     return SensorDataModel(id, timestamp, type, x = values[0], y = values[1], z = values[2])
 }

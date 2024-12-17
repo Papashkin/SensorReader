@@ -72,7 +72,7 @@ class HomeViewModel @Inject constructor(
         checkSensorDataAmount()
         Log.wtf(
             this@HomeViewModel::class.simpleName,
-            "amount of data lines: ${sensorEventList.size}, accelerometer x = ${accelerometer.x}, gyroscope x = ${gyroscope.x}"
+            "amount of data lines: ${sensorEventList.size}, accelerometer timestamp = ${accelerometer.timestamp}, accelerometer x = ${accelerometer.x}, accelerometer timestamp = ${accelerometer.timestamp}, gyroscope x = ${gyroscope.x}"
         )
     }
 
